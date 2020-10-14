@@ -42,9 +42,9 @@ public class ClienteEndpoint {
 		return new ResponseEntity<>(cliente, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "clientes/findByName/{name}")
-	public ResponseEntity<?> findClientesByName(@PathVariable String name) {
-		return new ResponseEntity<>(clienteDao.findByNomeIgnoreCaseContaining(name), HttpStatus.OK);
+	@GetMapping(path = "clientes/findByNome/{nome}")
+	public ResponseEntity<?> findClientesByName(@PathVariable String nome) {
+		return new ResponseEntity<>(clienteDao.findByNomeIgnoreCaseContaining(nome), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "clientes")
