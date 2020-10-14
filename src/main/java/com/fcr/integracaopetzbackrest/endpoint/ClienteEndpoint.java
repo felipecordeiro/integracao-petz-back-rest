@@ -19,10 +19,8 @@ import com.fcr.integracaopetzbackrest.error.ResourceNotFoundException;
 import com.fcr.integracaopetzbackrest.model.Cliente;
 import com.fcr.integracaopetzbackrest.repository.ClienteRepository;
 
-//import br.com.devdojo.error.ResourceNotFoundException;
-
 @RestController
-@RequestMapping("clientes")
+@RequestMapping("v1")
 public class ClienteEndpoint {
 
 	private final ClienteRepository clienteDao;
@@ -32,36 +30,36 @@ public class ClienteEndpoint {
 		this.clienteDao = clienteDao;
 	}
 
-	@GetMapping
+	@GetMapping(path = "clientes")
 	public ResponseEntity<?> listAll(Pageable pageable) {
 		return new ResponseEntity<>(clienteDao.findAll(pageable), HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "clientes/{id}")
 	public ResponseEntity<?> getClienteById(@PathVariable("id") Long id) {
 		verifyIfClienteExists(id);
 		Cliente cliente = clienteDao.findById(id).get();
 		return new ResponseEntity<>(cliente, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/findByName/{name}")
+	@GetMapping(path = "clientes/findByName/{name}")
 	public ResponseEntity<?> findClientesByName(@PathVariable String name) {
 		return new ResponseEntity<>(clienteDao.findByNomeIgnoreCaseContaining(name), HttpStatus.OK);
 	}
 
-	@PostMapping
+	@PostMapping(path = "clientes")
 	public ResponseEntity<?> save(@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(clienteDao.save(cliente), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "clientes/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		verifyIfClienteExists(id);
 		clienteDao.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@PutMapping
+	@PutMapping(path = "clientes")
 	public ResponseEntity<?> update(@RequestBody Cliente cliente) {
 		verifyIfClienteExists(cliente.getId());
 		clienteDao.save(cliente);
